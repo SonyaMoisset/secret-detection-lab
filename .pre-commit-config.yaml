@@ -1,0 +1,26 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: \.lock$|\.min\.js$
+        
+  - repo: local
+    hooks:
+      - id: no-plain-text-secrets
+        name: Check for plain text secrets
+        entry: ./scripts/check-secrets.sh
+        language: script
+        files: \.(js|py|rb|go|java|cpp|c|h|swift)$
